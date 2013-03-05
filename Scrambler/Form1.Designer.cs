@@ -33,9 +33,9 @@
             this.scrambleBtn = new System.Windows.Forms.Button();
             this.insertSpace = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.TrimSpace = new System.Windows.Forms.CheckBox();
+            this.trimSpace = new System.Windows.Forms.CheckBox();
             this.AllLowerCase = new System.Windows.Forms.CheckBox();
-            this.AllUpperCase = new System.Windows.Forms.CheckBox();
+            this.allUpperCase = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.inputText = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
@@ -86,9 +86,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.TrimSpace);
+            this.groupBox1.Controls.Add(this.trimSpace);
             this.groupBox1.Controls.Add(this.AllLowerCase);
-            this.groupBox1.Controls.Add(this.AllUpperCase);
+            this.groupBox1.Controls.Add(this.allUpperCase);
             this.groupBox1.Controls.Add(this.insertSpace);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(1, -6);
@@ -98,16 +98,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Options";
             // 
-            // TrimSpace
+            // trimSpace
             // 
-            this.TrimSpace.AutoSize = true;
-            this.TrimSpace.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrimSpace.Location = new System.Drawing.Point(7, 114);
-            this.TrimSpace.Name = "TrimSpace";
-            this.TrimSpace.Size = new System.Drawing.Size(85, 19);
-            this.TrimSpace.TabIndex = 7;
-            this.TrimSpace.Text = "Trim Space";
-            this.TrimSpace.UseVisualStyleBackColor = true;
+            this.trimSpace.AutoSize = true;
+            this.trimSpace.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.trimSpace.Location = new System.Drawing.Point(7, 114);
+            this.trimSpace.Name = "trimSpace";
+            this.trimSpace.Size = new System.Drawing.Size(85, 19);
+            this.trimSpace.TabIndex = 7;
+            this.trimSpace.Text = "Trim Space";
+            this.trimSpace.UseVisualStyleBackColor = true;
             // 
             // AllLowerCase
             // 
@@ -121,17 +121,17 @@
             this.AllLowerCase.UseVisualStyleBackColor = true;
             this.AllLowerCase.CheckedChanged += new System.EventHandler(this.AllLowerCase_CheckedChanged);
             // 
-            // AllUpperCase
+            // allUpperCase
             // 
-            this.AllUpperCase.AutoSize = true;
-            this.AllUpperCase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AllUpperCase.Location = new System.Drawing.Point(6, 59);
-            this.AllUpperCase.Name = "AllUpperCase";
-            this.AllUpperCase.Size = new System.Drawing.Size(103, 19);
-            this.AllUpperCase.TabIndex = 5;
-            this.AllUpperCase.Text = "All Upper Case";
-            this.AllUpperCase.UseVisualStyleBackColor = true;
-            this.AllUpperCase.CheckedChanged += new System.EventHandler(this.AllUpperCase_CheckedChanged);
+            this.allUpperCase.AutoSize = true;
+            this.allUpperCase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.allUpperCase.Location = new System.Drawing.Point(6, 59);
+            this.allUpperCase.Name = "allUpperCase";
+            this.allUpperCase.Size = new System.Drawing.Size(103, 19);
+            this.allUpperCase.TabIndex = 5;
+            this.allUpperCase.Text = "All Upper Case";
+            this.allUpperCase.UseVisualStyleBackColor = true;
+            this.allUpperCase.CheckedChanged += new System.EventHandler(this.AllUpperCase_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -190,9 +190,9 @@
         private System.Windows.Forms.CheckBox insertSpace;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox TrimSpace;
+        private System.Windows.Forms.CheckBox trimSpace;
         private System.Windows.Forms.CheckBox AllLowerCase;
-        private System.Windows.Forms.CheckBox AllUpperCase;
+        private System.Windows.Forms.CheckBox allUpperCase;
         private System.Windows.Forms.TextBox inputText;
     }
 }

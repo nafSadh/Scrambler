@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
 
-namespace ns7.sadhontoon {
-	class Scrambler {
+namespace Scrambler {
+	public class Scrambler {
 		public static bool AllUp = false;
 		public static bool TrimSpace = false;
 		public static bool InsertSpace = false;
@@ -32,20 +32,13 @@ namespace ns7.sadhontoon {
 				}
 			}
 			System.Text.StringBuilder sbt = new System.Text.StringBuilder();
-			int a;
-			if (InsertSpace) {
-				while (count > 0) {
-					a = random.Next(count);
-					sbt.Append(text[a]);
+			while (count > 0) {
+				int a = random.Next(count);
+				sbt.Append(text[a]);
+				if (InsertSpace == false) {
 					sbt.Append(' ');
-					text = setChar(text, a, text[--count];
 				}
-			} else {
-				while (count > 0) {
-					a = random.Next(count);
-					sbt.Append(text[a]);
-					text = setChar(text, a, text[--count];
-				}
+				text = setChar(text, a, text[--count]);
 			}
 			return sbt.ToString();
 		}

@@ -16,15 +16,18 @@ namespace Scrambler {
 		}
 
 		private void scrambleBtn_Click(object sender, EventArgs e) {
-			scrmbledText.Text = ns7.sadhontoon.Scrambler.scrableTheText(inputText.Text, AllUpperCase.Checked, AllLowerCase.Checked, TrimSpace.Checked, insertSpace.Checked);
+			Scrambler.AllUp = allUpperCase.Checked;
+			Scrambler.TrimSpace = trimSpace.Checked;
+			Scrambler.InsertSpace = insertSpace.Checked;
+			scrmbledText.Text = Scrambler.scrableTheText(inputText.Text);
 		}
 
 		private void AllUpperCase_CheckedChanged(object sender, EventArgs e) {
-			AllLowerCase.Enabled = !(AllUpperCase.Checked);
+			AllLowerCase.Enabled = !(allUpperCase.Checked);
 		}
 
 		private void AllLowerCase_CheckedChanged(object sender, EventArgs e) {
-			AllUpperCase.Enabled = !(AllLowerCase.Checked);
+			allUpperCase.Enabled = !(AllLowerCase.Checked);
 		}
 
 		private void inputText_Click(object sender, EventArgs e) {
