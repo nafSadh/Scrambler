@@ -9,7 +9,6 @@ namespace Scrambler {
 
 		public static string scrableTheText(string text) {
 			Random random = new Random();
-			int count = text.Length;
 			if (AllUp) {
 				for (int i = 0; i < text.Length; i++) {
 					if (Char.IsLower(text[i])) {
@@ -23,6 +22,7 @@ namespace Scrambler {
 					}
 				}
 			}
+			int count = text.Length;
 			if (TrimSpace) {
 				for (int i = 0; i < text.Length; i++) {
 					if (Char.IsWhiteSpace(text[i])) {
@@ -35,7 +35,7 @@ namespace Scrambler {
 			while (count > 0) {
 				int a = random.Next(count);
 				sbt.Append(text[a]);
-				if (InsertSpace == false) {
+				if (InsertSpace) {
 					sbt.Append(' ');
 				}
 				text = setChar(text, a, text[--count]);
