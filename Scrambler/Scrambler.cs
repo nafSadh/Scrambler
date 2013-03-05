@@ -1,46 +1,69 @@
 ﻿using System;
+using System.Text;
 
 namespace ns7.sadhontoon {
 	class Scrambler {
-		public static string scrableTheText(string text, bool allUp, bool allLower, bool trimSpace, bool insertSpace) {
-			System.Random random = new System.Random();
-			char[] set = text.ToCharArray();
-			int count = set.Length;
-			if (allUp) {
-				for (int i = 0; i < set.Length; i++) {
-					if (Char.IsLower(set[i])) set[i] = Char.ToUpper(set[i]);
+		public static bool AllUp = false;
+		public static bool TrimSpace = false;
+		public static bool InsertSpace = false;
+
+		public static string scrableTheText(string text) {
+			Random random = new Random();
+			int count = text.Length;
+			if (AllUp) {
+				for (int i = 0; i < text.Length; i++) {
+					if (Char.IsLower(text[i])) {
+						text = ChangeChar(text, i);
+					}
+				}
+			} else {
+				for (int i = 0; i < text.Length; i++) {
+					if (Char.IsUpper(text[i])) {
+						text = ChangeChar(text, i);
+					}
 				}
 			}
-			if (allLower) {
-				for (int i = 0; i < set.Length; i++) {
-					if (Char.IsUpper(set[i])) set[i] = Char.ToLower(set[i]);
-				}
-			}
-			if (trimSpace) {
-				for (int i = 0; i < set.Length; i++) {
-					if (Char.IsWhiteSpace(set[i])) {
-						while (Char.IsWhiteSpace(set[--count])) ;
-						set[i] = set[count];
+			if (TrimSpace) {
+				for (int i = 0; i < text.Length; i++) {
+					if (Char.IsWhiteSpace(text[i])) {
+						while (Char.IsWhiteSpace(text[--count])) ;
+						text = setChar(text, i, text[count]);
 					}
 				}
 			}
 			System.Text.StringBuilder sbt = new System.Text.StringBuilder();
 			int a;
-			if (insertSpace) {
+			if (InsertSpace) {
 				while (count > 0) {
 					a = random.Next(count);
-					sbt.Append(set[a]);
+					sbt.Append(text[a]);
 					sbt.Append(' ');
-					set[a] = set[--count];
+					text = setChar(text, a, text[--count];
 				}
 			} else {
 				while (count > 0) {
 					a = random.Next(count);
-					sbt.Append(set[a]);
-					set[a] = set[--count];
+					sbt.Append(text[a]);
+					text = setChar(text, a, text[--count];
 				}
 			}
 			return sbt.ToString();
+		}
+
+		private static string ChangeChar(string text, int index) {
+			StringBuilder str = new StringBuilder(text);
+			if (AllUp) {
+				str[index] = Char.ToUpper(text[index]);
+			} else {
+				str[index] = Char.ToLower(text[index]);
+			}
+			return str.ToString();
+		}
+
+		private static string setChar(string text, int index, char c) {
+			StringBuilder str = new StringBuilder(text);
+			str[index] = c;
+			return str.ToString();
 		}
 	}
 }
