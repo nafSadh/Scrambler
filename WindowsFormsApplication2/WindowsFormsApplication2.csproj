@@ -8,7 +8,7 @@
     <ProjectGuid>{C647460E-5025-46B9-82AB-108168D65C94}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Scrambler</RootNamespace>
+    <RootNamespace>ScramblerNS</RootNamespace>
     <AssemblyName>Scrambler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

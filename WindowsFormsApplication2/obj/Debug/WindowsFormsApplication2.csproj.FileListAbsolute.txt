@@ -18,8 +18,8 @@ D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.exe.con
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.exe
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.pdb
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csprojResolveAssemblyReference.cache
-D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.Properties.Resources.resources
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csproj.GenerateResource.Cache
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.exe
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.pdb
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\ScramblerWindowsForm.MainForm.resources
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\ScramblerNS.Properties.Resources.resources

@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace Scrambler {
+namespace ScramblerNS {
 	public class Scrambler {
 		private const string RUSSIAN_CHARACTERS = "ёйцукенгшщзхъэждлорпавыфячсмитьбюЁЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФЯЧСМИТЬБЮ";
 		private const string ENGLISH_CHARACTERS = "abcdefghiklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ";
 		private const string OTHER_CHARACTERS = "><!@#$%&*1234567890";
 		private const int BINARY_LENGTH = 16;
 
-		public string BinaryString(string MainString) {
-			return BinaryWork(MainString);
+		public string BinaryString(string mainString) {
+			return binaryWork(mainString);
 		}
 
-		public string ScrambledString(string MainString) {
-			return ScrambstrBinaryext(BinaryWork(MainString));
+		public string ScrambledString(string mainString) {
+			return unScrambleBinaryString(mainString);
 		}
 
 		public string MainString(string passingString, DecodeType decodeType) {
@@ -29,7 +29,7 @@ namespace Scrambler {
 			throw new Exception("DecodeType Error");
 		}
 
-		private string BinaryWork(string WhatToWorkOn) {
+		private string binaryWork(string WhatToWorkOn) {
 			string BinaryResults = "";
 			foreach (char GetChr in WhatToWorkOn) {
 				BinaryResults += GetBinary(GetChr);
@@ -112,7 +112,7 @@ namespace Scrambler {
 			return rvSt;
 		}
 
-		private string ScrambstrBinaryext(string ScrString) {
+		private string unScrambleBinaryString(string ScrString) {
 			int rndRep;
 			Random intRan = new Random();
 			string newString = "";

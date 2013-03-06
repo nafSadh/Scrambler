@@ -4,6 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Scrambler {
+namespace ScramblerNS {
 	public enum DecodeType { Binary, UnScramble };
 }
