@@ -14,6 +14,12 @@ C:\Users\Павел\Desktop\Scramble_02\WindowsFormsApplication2\obj\Debug\Windo
 C:\Users\Павел\Desktop\Scramble_02\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Form1.resources
 C:\Users\Павел\Desktop\Scramble_02\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Properties.Resources.resources
 C:\Users\Павел\Desktop\Scramble_02\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csproj.GenerateResource.Cache
-D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
-D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
 D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.exe.config
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.exe
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\bin\Debug\Scrambler.pdb
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csprojResolveAssemblyReference.cache
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.Form1.resources
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.Properties.Resources.resources
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.csproj.GenerateResource.Cache
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.exe
+D:\exquisitely\C#\Scrambler\WindowsFormsApplication2\obj\Debug\Scrambler.pdb

@@ -6,7 +6,11 @@ using System.Collections;
 
 namespace Scrambler {
 	public class Scrambler {
-		private string AllScrChrs = "><!@#$%&*abcdefghiklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ1234567890";
+		private const string RUSSIAN_CHARACTERS = "ёйцукенгшщзхъэждлорпавыфячсмитьбюЁЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФЯЧСМИТЬБЮ";
+		private const string ENGLISH_CHARACTERS = "abcdefghiklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ";
+		private const string OTHER_CHARACTERS = "><!@#$%&*1234567890";
+
+		private const int BINARY_LENGTH = 16;
 
 		public string BinaryString(string MainString) {
 			return BinaryWork(MainString);
@@ -41,9 +45,9 @@ namespace Scrambler {
 			int ii;
 			string CharResult = "";
 
-			for (ii = 0; ii < PassingString.Length; ii += 8) {
+			for (ii = 0; ii < PassingString.Length; ii += BINARY_LENGTH) {
 				try {
-					CharResult += GetCharacter(PassingString.Substring(ii, 8));
+					CharResult += GetCharacter(PassingString.Substring(ii, BINARY_LENGTH));
 				} catch (OverflowException) { }
 			}
 			return CharResult;
@@ -54,7 +58,7 @@ namespace Scrambler {
 			// Cut last 9 characters of the text
 			// Last 9 characters contain the extra character with 1 & 0 characters
 			string[] strOneToZero = new string[3];
-			string ScrChrs = AllScrChrs;
+			string ScrChrs = OTHER_CHARACTERS;
 			int ii;
 
 			string LastNine = rvsString(Uscr.Substring(Uscr.Length - 9));
@@ -114,17 +118,15 @@ namespace Scrambler {
 
 		private string ScrambstrBinaryext(string ScrString) {
 			int rndRep;
-
 			Random intRan = new Random();
 			string newString = "";
-			string ScrChrs = AllScrChrs;
+			string ScrChrs = OTHER_CHARACTERS;
 			string chrOne = ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1);
 			ScrChrs = ScrChrs.Replace(chrOne, "");
 			string chrZero = ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1);
 			ScrChrs = ScrChrs.Replace(chrZero, "");
 
 			int IntStrLength = ScrString.Length;
-
 			foreach (char OZchr in ScrString) {
 				rndRep = intRan.Next(3);
 
@@ -165,7 +167,7 @@ namespace Scrambler {
 		}
 
 		private string GetBinary(char strChr) {
-			return Convert.ToString(strChr, 2).PadLeft(8, '0');
+			return Convert.ToString(strChr, 2).PadLeft(BINARY_LENGTH, '0');
 		}
 	}
 }
