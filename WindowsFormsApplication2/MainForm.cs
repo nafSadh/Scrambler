@@ -20,17 +20,21 @@ namespace ScramblerWindowsForm {
 		}
 
 		private void button3_Click(object sender, EventArgs e) {
-			string text = scr.MainString(File.ReadAllText(@OUTPUT, Encoding.Default), DecodeType.UnScramble);
+			string sourceText = File.ReadAllText(@OUTPUT, Encoding.Default);
+			StopWatchOneTime.Start();	
+			string text = scr.MainString(sourceText, DecodeType.UnScramble);
+			StopWatchOneTime.Stop();
+			stopWatchLabel.Text = StopWatchOneTime.Result.ToString();
 			MessageBox.Show(text);
 			File.WriteAllText(@"outputUnScrambled.txt", text);
 		}
 
 		private void button1_Click(object sender, EventArgs e) {
 			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
-			DateTime begin = DateTime.Now;
+			StopWatchOneTime.Start();
 			logFileTextBox.Text = scr.ScrambledString(text);
-			DateTime end = DateTime.Now;
-			stopWatchLabel.Text = (end - begin).ToString();
+			StopWatchOneTime.Stop();
+			stopWatchLabel.Text = (StopWatchOneTime.Result).ToString();
 			File.WriteAllText(@OUTPUT, logFileTextBox.Text);
 		}
 
