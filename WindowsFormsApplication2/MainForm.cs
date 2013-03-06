@@ -14,9 +14,10 @@ namespace ScramblerWindowsForm {
 		private string OUTPUT = "output.txt";
 		private Scrambler scr = new Scrambler();
 
-		private delegate void ScramblerStringDelegate(ref string text);
+		private delegate string ScramblerStringDelegate(string text);
 		private ScramblerStringDelegate std;
-		private string text;
+		private const bool LOG = true;
+		private const bool NOLOG = false;
 
 		public MainForm() {
 			InitializeComponent();
@@ -26,16 +27,8 @@ namespace ScramblerWindowsForm {
 			scr.ProgressIncrement += scr_ProgressIncrement;
 		}
 
-		private void scr_ProgressIncrement(int progressCount) {
-			int value = progressBar.Value + progressCount;
-			if (value > 100) {
-				value = 100;
-			}
-			progressBar.Value = value;
-		}
-
 		private void scr_LogMessage(string message) {
-			putMessageLabel(logFileTextBox, message + "\r\n");
+			putMessageLabel(logFileTextBox, message + "\r\n", LOG);
 		}
 
 		private void button3_Click(object sender, EventArgs e) {
@@ -50,25 +43,34 @@ namespace ScramblerWindowsForm {
 		}
 
 		private void button1_Click(object sender, EventArgs e) {
-			text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
+			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
 			std = new ScramblerStringDelegate(scr.ScrambledString);
 			StopWatchOneTime.Start();
-			std.BeginInvoke(ref text, scramblerCallBack, this);
+			std.BeginInvoke(text, scramblerCallBack, this);
 		}
 
 		private void scramblerCallBack(IAsyncResult ia) {
-			std.EndInvoke(ref text, ia);
+			string resultText = std.EndInvoke(ia);
 			StopWatchOneTime.Stop();
-			putMessageLabel(stopWatchLabel, StopWatchOneTime.Result.ToString());
-			File.WriteAllText(@OUTPUT, text);
+			putMessageLabel(stopWatchLabel, StopWatchOneTime.Result.ToString(), NOLOG);
+			File.WriteAllText(@OUTPUT, resultText);
 		}
 
-		private void putMessageLabel(Control box, string message) {
-			if (box.InvokeRequired) {
-				AddTextDelegate textBoxDelegate = new AddTextDelegate(AddTextCallBack);
-				box.Invoke(textBoxDelegate, message, box);
+		private void putMessageLabel(Control control, string message, bool log) {
+			if (control.InvokeRequired) {
+				AddTextDelegate controlDelegate = null;
+				if (log) {
+					controlDelegate = new AddTextDelegate(AddLogTextCallBack);
+				} else {
+					controlDelegate = new AddTextDelegate(AddTextCallBack);
+				}
+				control.Invoke(controlDelegate, message, control);
 			} else {
-				box.Text = message;
+				if (log) {
+					control.Text += message;
+				} else {
+					control.Text = message;
+				}
 			}
 		}
 		private delegate void AddTextDelegate(string text, Control textBox);
@@ -76,6 +78,18 @@ namespace ScramblerWindowsForm {
 			textBox.Text = text;
 		}
 
+		private void AddLogTextCallBack(string text, Control textBox) {
+			textBox.Text += text;
+		}
+
+		private void scr_ProgressIncrement(int progressCount) {
+			int value = progressBar.Value + progressCount;
+			if (value > 100) {
+				value = 100;
+			}
+			progressBar.Value = value;
+		}
+		
 		private void button4_Click(object sender, EventArgs e) {
 			this.Close();
 		}

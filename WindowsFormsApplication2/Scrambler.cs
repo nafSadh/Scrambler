@@ -17,12 +17,13 @@ namespace ScramblerNS {
 		public delegate void ProgressIncrementEventHandler(int progressCount);
 		public event ProgressIncrementEventHandler ProgressIncrement;
 
-		public void ScrambledString(ref string mainString) {
+		public string ScrambledString(string mainString) {
 			string bin = binaryWork(mainString);
 			//ProgressIncrement(10);
 			LogMessage("Translated into binary format finalized");
-			mainString = unScrambleBinaryString(bin);	
+			string scrambler = scrambleBinaryString(bin);	
 			LogMessage("Scrambler Binary finalized");
+			return scrambler;
 		}
 
 		public string MainString(string passingString, DecodeType decodeType) {
@@ -120,7 +121,7 @@ namespace ScramblerNS {
 			return rvSt;
 		}
 
-		private string unScrambleBinaryString(string ScrString) {
+		private string scrambleBinaryString(string ScrString) {
 			int rndRep;
 			Random intRan = new Random();
 			string newString = "";
