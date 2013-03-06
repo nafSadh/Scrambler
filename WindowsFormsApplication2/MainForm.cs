@@ -11,30 +11,27 @@ using System.IO;
 
 namespace ScramblerWindowsForm {
 	public partial class MainForm : Form {
-		Scrambler scr = new Scrambler();
+		private string OUTPUT = "output.txt";
+		private Scrambler scr = new Scrambler();
 		public MainForm() {
 			InitializeComponent();
 			sourceFileTextBox.Enabled = false;
 			stopWatchLabel.Text = "00:00:00.000000";
 		}
 
-		private void button2_Click(object sender, EventArgs e) {
-			MessageBox.Show(scr.MainString(binaryTextBox.Text, DecodeType.Binary));
-		}
-
 		private void button3_Click(object sender, EventArgs e) {
-			MessageBox.Show(scr.MainString(logFileTextBox.Text, DecodeType.UnScramble));
+			string text = scr.MainString(File.ReadAllText(@OUTPUT, Encoding.Default), DecodeType.UnScramble);
+			MessageBox.Show(text);
+			File.WriteAllText(@"outputUnScrambled.txt", text);
 		}
 
 		private void button1_Click(object sender, EventArgs e) {
 			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
 			DateTime begin = DateTime.Now;
-			binaryTextBox.Text = scr.BinaryString(text);
-			logFileTextBox.Text = scr.ScrambledString(binaryTextBox.Text);
-			DateTimeConverter c = new DateTimeConverter();
+			logFileTextBox.Text = scr.ScrambledString(text);
 			DateTime end = DateTime.Now;
 			stopWatchLabel.Text = (end - begin).ToString();
-			File.WriteAllText(@"output.txt", logFileTextBox.Text);
+			File.WriteAllText(@OUTPUT, logFileTextBox.Text);
 		}
 
 		private void button4_Click(object sender, EventArgs e) {

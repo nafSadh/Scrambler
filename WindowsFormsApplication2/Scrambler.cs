@@ -11,12 +11,8 @@ namespace ScramblerNS {
 		private const string OTHER_CHARACTERS = "><!@#$%&*1234567890";
 		private const int BINARY_LENGTH = 16;
 
-		public string BinaryString(string mainString) {
-			return binaryWork(mainString);
-		}
-
 		public string ScrambledString(string mainString) {
-			return unScrambleBinaryString(mainString);
+			return unScrambleBinaryString(binaryWork(mainString));
 		}
 
 		public string MainString(string passingString, DecodeType decodeType) {
