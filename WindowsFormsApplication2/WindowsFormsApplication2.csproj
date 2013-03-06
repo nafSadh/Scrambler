@@ -56,7 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecodeType.cs" />
     <Compile Include="Scrambler.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

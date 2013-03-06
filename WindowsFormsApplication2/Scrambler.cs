@@ -26,18 +26,12 @@ namespace ScramblerNS {
 			return scrambler;
 		}
 
-		public string MainString(string passingString, DecodeType decodeType) {
-			switch (decodeType) {
-				case DecodeType.Binary:
-					return DecodeBinary(passingString);
-				case DecodeType.UnScramble:
-					string bin = UnScrambstrBinaryext(passingString);
-					LogMessage("Translated into binary format finalized");
-					string unScram = DecodeBinary(bin);
-					LogMessage("UnScrambler Binary finalized");
-					return unScram;
-			}
-			throw new Exception("DecodeType Error");
+		public string MainString(string passingString) {
+			string bin = UnScrambstrBinaryext(passingString);
+			LogMessage("Translated into binary format finalized");
+			string unScram = DecodeBinary(bin);
+			LogMessage("UnScrambler Binary finalized");
+			return unScram;
 		}
 
 		private string binaryWork(string WhatToWorkOn) {

@@ -35,7 +35,7 @@ namespace ScramblerWindowsForm {
 			progressBar.Value = 0;
 			string sourceText = File.ReadAllText(@OUTPUT, Encoding.Default);
 			StopWatchOneTime.Start();
-			string text = scr.MainString(sourceText, DecodeType.UnScramble);
+			string text = scr.MainString(sourceText);
 			StopWatchOneTime.Stop();
 			stopWatchLabel.Text = StopWatchOneTime.Result.ToString();
 			MessageBox.Show(text);
