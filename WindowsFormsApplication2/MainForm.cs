@@ -43,6 +43,7 @@ namespace ScramblerWindowsForm {
 		}
 
 		private void button1_Click(object sender, EventArgs e) {
+			progressBar.Value = 0;
 			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
 			std = new ScramblerStringDelegate(scr.ScrambledString);
 			StopWatchOneTime.Start();
@@ -77,7 +78,6 @@ namespace ScramblerWindowsForm {
 		private void AddTextCallBack(string text, Control textBox) {
 			textBox.Text = text;
 		}
-
 		private void AddLogTextCallBack(string text, Control textBox) {
 			textBox.Text += text;
 		}
@@ -87,9 +87,21 @@ namespace ScramblerWindowsForm {
 			if (value > 100) {
 				value = 100;
 			}
-			progressBar.Value = value;
+			putProgress(progressBar, value);
 		}
-		
+		private void putProgress(ProgressBar control, int count) {
+			if (control.InvokeRequired) {
+				AddProgressDelegate controlDelegate = new AddProgressDelegate(AddProgressCallBack);
+				control.Invoke(controlDelegate, control, count);
+			} else {
+				progressBar.Value = count;
+			}
+		}
+		private delegate void AddProgressDelegate(ProgressBar progress, int count);
+		private void AddProgressCallBack(ProgressBar progress, int count) {
+			progress.Value = count;
+		}
+
 		private void button4_Click(object sender, EventArgs e) {
 			this.Close();
 		}
@@ -99,7 +111,5 @@ namespace ScramblerWindowsForm {
 			open.ShowDialog();
 			sourceFileTextBox.Text = open.FileName;
 		}
-
-		
 	}
 }
