@@ -11,8 +11,19 @@ namespace ScramblerNS {
 		private const string OTHER_CHARACTERS = "><!@#$%&*1234567890";
 		private const int BINARY_LENGTH = 16;
 
+		public delegate void LogMessageEventHandler(string message);
+		public event LogMessageEventHandler LogMessage;
+
+		public delegate void ProgressIncrementEventHandler(int progressCount);
+		public event ProgressIncrementEventHandler ProgressIncrement;
+
 		public string ScrambledString(string mainString) {
-			return unScrambleBinaryString(binaryWork(mainString));
+			string bin = binaryWork(mainString);
+			ProgressIncrement(10);
+			LogMessage("Translated into binary format finalized");
+			string scrambler = unScrambleBinaryString(bin);
+			LogMessage("Scrambler Binary finalized");
+			return scrambler;
 		}
 
 		public string MainString(string passingString, DecodeType decodeType) {
@@ -20,7 +31,11 @@ namespace ScramblerNS {
 				case DecodeType.Binary:
 					return DecodeBinary(passingString);
 				case DecodeType.UnScramble:
-					return DecodeBinary((UnScrambstrBinaryext(passingString)));
+					string bin = UnScrambstrBinaryext(passingString);
+					LogMessage("Translated into binary format finalized");
+					string unScram = DecodeBinary(bin);
+					LogMessage("UnScrambler Binary finalized");
+					return unScram;
 			}
 			throw new Exception("DecodeType Error");
 		}
@@ -34,12 +49,10 @@ namespace ScramblerNS {
 		}
 
 		private string DecodeBinary(string PassingString) {
-			int ii;
 			string CharResult = "";
-
-			for (ii = 0; ii < PassingString.Length; ii += BINARY_LENGTH) {
+			for (int i = 0; i < PassingString.Length; i += BINARY_LENGTH) {
 				try {
-					CharResult += GetCharacter(PassingString.Substring(ii, BINARY_LENGTH));
+					CharResult += GetCharacter(PassingString.Substring(i, BINARY_LENGTH));
 				} catch (OverflowException) { }
 			}
 			return CharResult;
@@ -119,6 +132,13 @@ namespace ScramblerNS {
 			ScrChrs = ScrChrs.Replace(chrZero, "");
 
 			int IntStrLength = ScrString.Length;
+			int progressInc = 1;
+			const int UNSCRAMBLE_PROGRESS = 90;
+			if (IntStrLength > UNSCRAMBLE_PROGRESS) {
+				progressInc = IntStrLength / UNSCRAMBLE_PROGRESS;
+			} else {
+				progressInc = UNSCRAMBLE_PROGRESS / IntStrLength;
+			}
 			foreach (char OZchr in ScrString) {
 				rndRep = intRan.Next(3);
 
@@ -132,6 +152,7 @@ namespace ScramblerNS {
 				}
 
 				newString += OneAndZero(intRan.Next(1, 3), ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1));
+				ProgressIncrement(progressInc);
 			}
 
 			// When return, the first and the last character is random to confuse people. Before that two characters are our guys

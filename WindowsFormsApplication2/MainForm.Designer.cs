@@ -37,6 +37,7 @@
 			this.button4 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
 			this.stopWatchLabel = new System.Windows.Forms.Label();
+			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.SuspendLayout();
 			// 
 			// sourceFileTextBox
@@ -57,7 +58,7 @@
 			// 
 			// logFileTextBox
 			// 
-			this.logFileTextBox.Location = new System.Drawing.Point(12, 102);
+			this.logFileTextBox.Location = new System.Drawing.Point(12, 115);
 			this.logFileTextBox.Multiline = true;
 			this.logFileTextBox.Name = "logFileTextBox";
 			this.logFileTextBox.Size = new System.Drawing.Size(570, 232);
@@ -66,7 +67,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(10, 86);
+			this.label3.Location = new System.Drawing.Point(10, 99);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(87, 13);
 			this.label3.TabIndex = 5;
@@ -84,7 +85,7 @@
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(470, 76);
+			this.button3.Location = new System.Drawing.Point(470, 89);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(113, 23);
 			this.button3.TabIndex = 8;
@@ -94,7 +95,7 @@
 			// 
 			// button4
 			// 
-			this.button4.Location = new System.Drawing.Point(495, 340);
+			this.button4.Location = new System.Drawing.Point(495, 353);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(88, 23);
 			this.button4.TabIndex = 9;
@@ -121,11 +122,19 @@
 			this.stopWatchLabel.TabIndex = 11;
 			this.stopWatchLabel.Text = "Enter Text";
 			// 
+			// progressBar
+			// 
+			this.progressBar.Location = new System.Drawing.Point(208, 58);
+			this.progressBar.Name = "progressBar";
+			this.progressBar.Size = new System.Drawing.Size(374, 18);
+			this.progressBar.TabIndex = 12;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(590, 367);
+			this.ClientSize = new System.Drawing.Size(590, 385);
+			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.stopWatchLabel);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button4);
@@ -155,6 +164,7 @@
         private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button5;
 		private System.Windows.Forms.Label stopWatchLabel;
+		private System.Windows.Forms.ProgressBar progressBar;
     }
 }
 
