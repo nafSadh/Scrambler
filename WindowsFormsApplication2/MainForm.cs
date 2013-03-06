@@ -13,11 +13,15 @@ namespace ScramblerWindowsForm {
 	public partial class MainForm : Form {
 		private string OUTPUT = "output.txt";
 		private Scrambler scr = new Scrambler();
+
+		private delegate void ScramblerStringDelegate(ref string text);
+		private ScramblerStringDelegate std;
+		private string text;
+
 		public MainForm() {
 			InitializeComponent();
 			sourceFileTextBox.Enabled = false;
 			stopWatchLabel.Text = "00:00:00.000000";
-
 			scr.LogMessage += scr_LogMessage;
 			scr.ProgressIncrement += scr_ProgressIncrement;
 		}
@@ -31,28 +35,45 @@ namespace ScramblerWindowsForm {
 		}
 
 		private void scr_LogMessage(string message) {
-			logFileTextBox.Text += message + "\r\n";
+			putMessageLabel(logFileTextBox, message + "\r\n");
 		}
 
 		private void button3_Click(object sender, EventArgs e) {
 			progressBar.Value = 0;
 			string sourceText = File.ReadAllText(@OUTPUT, Encoding.Default);
-			StopWatchOneTime.Start();	
+			StopWatchOneTime.Start();
 			string text = scr.MainString(sourceText, DecodeType.UnScramble);
 			StopWatchOneTime.Stop();
 			stopWatchLabel.Text = StopWatchOneTime.Result.ToString();
 			MessageBox.Show(text);
 			File.WriteAllText(@"outputUnScrambled.txt", text);
-			MessageBox.Show(progressBar.Value.ToString());
 		}
 
 		private void button1_Click(object sender, EventArgs e) {
-			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
+			text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
+			std = new ScramblerStringDelegate(scr.ScrambledString);
 			StopWatchOneTime.Start();
-			string scrambler = scr.ScrambledString(text);
+			std.BeginInvoke(ref text, scramblerCallBack, this);
+		}
+
+		private void scramblerCallBack(IAsyncResult ia) {
+			std.EndInvoke(ref text, ia);
 			StopWatchOneTime.Stop();
-			stopWatchLabel.Text = StopWatchOneTime.Result.ToString();
-			File.WriteAllText(@OUTPUT, scrambler);
+			putMessageLabel(stopWatchLabel, StopWatchOneTime.Result.ToString());
+			File.WriteAllText(@OUTPUT, text);
+		}
+
+		private void putMessageLabel(Control box, string message) {
+			if (box.InvokeRequired) {
+				AddTextDelegate textBoxDelegate = new AddTextDelegate(AddTextCallBack);
+				box.Invoke(textBoxDelegate, message, box);
+			} else {
+				box.Text = message;
+			}
+		}
+		private delegate void AddTextDelegate(string text, Control textBox);
+		private void AddTextCallBack(string text, Control textBox) {
+			textBox.Text = text;
 		}
 
 		private void button4_Click(object sender, EventArgs e) {
@@ -64,5 +85,7 @@ namespace ScramblerWindowsForm {
 			open.ShowDialog();
 			sourceFileTextBox.Text = open.FileName;
 		}
+
+		
 	}
 }
