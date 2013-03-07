@@ -1,7 +1,11 @@
 # git ignore file
+
 *.suo
+
 *.UTests.ldf
+
 *.UTests.mdf
+
 *.user
 bin
 obj
@@ -9,3 +13,4 @@ scratch
 TestResults
 StyleCop.Cache
 _Resharper*
+*.exe
