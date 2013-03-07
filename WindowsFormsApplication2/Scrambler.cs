@@ -84,7 +84,7 @@ namespace ScramblerNS {
 
 				newString += oneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1));
 			}
-			return oneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1)) 
+			return oneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1))
 				+ newString + oneAndZero(random.Next(3), oneChar) + oneAndZero(random.Next(3), zeroChar)
 				+ oneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1));
 		}
@@ -108,12 +108,12 @@ namespace ScramblerNS {
 			LogMessage("UnScrambler Binary finalized");
 			return unScram;
 		}
-		
+
 		#endregion
 
-		
 
-		
+
+
 
 		private string DecodeBinary(string passingString) {
 			string charResult = "";
@@ -126,43 +126,32 @@ namespace ScramblerNS {
 		}
 
 		private string UnScrambstrBinaryext(string unScrambleString) {
-			string[] strOneToZero = new string[3];
 			string ScrChrs = OTHER_CHARACTERS;
+
 			// Cut last 9 characters of the text
 			// Last 9 characters contain the extra character with 1 & 0 characters
 			const int NINE_CHARS = 9;
-			string LastNine = reverseString(unScrambleString.Substring(unScrambleString.Length - NINE_CHARS));
+			string lastNineChars = reverseString(unScrambleString.Substring(unScrambleString.Length - NINE_CHARS));
 
 			// A unique way to find unique characters once ;)
-			foreach (char ChrNine in LastNine) {
-				if (strOneToZero[0] == null) {
-					strOneToZero[0] = ChrNine.ToString(); continue;
-				}
-				if (strOneToZero[0] == ChrNine.ToString()) continue;
-				if (strOneToZero[1] == null) {
-					strOneToZero[1] = ChrNine.ToString(); continue;
-				}
-				if (strOneToZero[1] == ChrNine.ToString()) continue;
-				strOneToZero[2] = ChrNine.ToString();
-				break;
-			}
+			string str = new string (lastNineChars.Distinct().ToArray());
 
 			// We need array "1" and "2". "0" is extra
-			ScrChrs = ScrChrs.Replace(strOneToZero[1], "");
-			ScrChrs = ScrChrs.Replace(strOneToZero[2], "");
+			ScrChrs = ScrChrs.Replace(str[1], '\0');
+			ScrChrs = ScrChrs.Replace(str[2], '\0');
 
 			for (int i = 0; i < ScrChrs.Length; i++) {
 				unScrambleString = unScrambleString.Replace(ScrChrs.Substring(i, 1), "");
 			}
 
 			// I wrote a method to make things simpler.
-			unScrambleString = SingleString(strOneToZero[1], unScrambleString);
-			unScrambleString = SingleString(strOneToZero[2], unScrambleString);
+			unScrambleString = SingleString(str[1].ToString(), unScrambleString);
+			unScrambleString = SingleString(str[2].ToString(), unScrambleString);
 
 			unScrambleString = unScrambleString.Replace(";", "");
 			unScrambleString = unScrambleString.Replace(":", "");
-			unScrambleString = unScrambleString.Replace(strOneToZero[1], "0");
-			unScrambleString = unScrambleString.Replace(strOneToZero[2], "1");
+			unScrambleString = unScrambleString.Replace(str[1], '0');
+			unScrambleString = unScrambleString.Replace(str[2], '1');
 
 			return unScrambleString.Substring(0, (unScrambleString.Length - 2));
 		} // Last two was our guys remember?
