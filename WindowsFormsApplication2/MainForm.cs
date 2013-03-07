@@ -25,6 +25,8 @@ namespace ScramblerWindowsForm {
 			stopWatchLabel.Text = "00:00:00.000000";
 			scr.LogMessage += scr_LogMessage;
 			scr.ProgressIncrement += scr_ProgressIncrement;
+
+			sourceFileTextBox.Text = "C:\\Users\\Павел\\Desktop\\input.txt";
 		}
 
 		private void scr_LogMessage(string message) {
