@@ -18,7 +18,7 @@ namespace ScramblerNS {
 		public event ProgressIncrementEventHandler ProgressIncrement;
 
 		public string ScrambledString(string mainString) {
-			string bin = binaryWork(mainString);
+			byte[] bin = binaryWork(mainString);
 			ProgressIncrement(10);
 			LogMessage("Translated into binary format finalized");
 			string scrambler = scrambleBinaryString(bin);	
@@ -34,22 +34,18 @@ namespace ScramblerNS {
 			return unScram;
 		}
 
-		private string binaryWork(string WhatToWorkOn) {
-			string BinaryResults = "";
-			foreach (char GetChr in WhatToWorkOn) {
-				BinaryResults += GetBinary(GetChr);
-			}
-			return BinaryResults;
+		private byte[] binaryWork(string workString) {
+			return Encoding.Unicode.GetBytes(workString);
 		}
 
-		private string DecodeBinary(string PassingString) {
-			string CharResult = "";
-			for (int i = 0; i < PassingString.Length; i += BINARY_LENGTH) {
+		private string DecodeBinary(string passingString) {
+			string charResult = "";
+			for (int i = 0; i < passingString.Length; i += BINARY_LENGTH) {
 				try {
-					CharResult += GetCharacter(PassingString.Substring(i, BINARY_LENGTH));
+					charResult += getCharacter(passingString.Substring(i, BINARY_LENGTH));
 				} catch (OverflowException) { }
 			}
-			return CharResult;
+			return charResult;
 		}
 
 		private string UnScrambstrBinaryext(string Uscr) {
@@ -115,17 +111,19 @@ namespace ScramblerNS {
 			return rvSt;
 		}
 
-		private string scrambleBinaryString(string ScrString) {
+		private string scrambleBinaryString(byte[] ScrString) {
 			int rndRep;
-			Random intRan = new Random();
+			Random random = new Random();
 			string newString = "";
-			string ScrChrs = OTHER_CHARACTERS;
-			string chrOne = ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1);
-			ScrChrs = ScrChrs.Replace(chrOne, "");
-			string chrZero = ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1);
-			ScrChrs = ScrChrs.Replace(chrZero, "");
-
+			string sourceChars = OTHER_CHARACTERS;
+			string oneChar = sourceChars.Substring(random.Next(sourceChars.Length), 1);
+			sourceChars = sourceChars.Replace(oneChar, "");
+			string zeroChar = sourceChars.Substring(random.Next(sourceChars.Length), 1);
+			sourceChars = sourceChars.Replace(zeroChar, "");
 			int IntStrLength = ScrString.Length;
+
+			#region InitializeProgress
+
 			int progressInc = 1;
 			const int UNSCRAMBLE_PROGRESS = 90;
 			bool everyCicle = true;
@@ -136,16 +134,22 @@ namespace ScramblerNS {
 				progressInc = UNSCRAMBLE_PROGRESS / IntStrLength;
 			}
 			int index = 0;
-			foreach (char OZchr in ScrString) {
-				rndRep = intRan.Next(3);
-				switch (OZchr) {
-					case '1': // I wrote a method to make things simpler.
-						newString += OneAndZero(rndRep, chrOne) + OneAndZero(rndRep, ";");
+
+			#endregion
+
+			foreach (byte oneZeroChar in ScrString) {
+				rndRep = random.Next(3);
+				switch (oneZeroChar) {
+					case 1:
+						newString += OneAndZero(rndRep, oneChar) + OneAndZero(rndRep, ";");
 						break;
-					case '0':
-						newString += OneAndZero(rndRep, chrZero) + OneAndZero(rndRep, ":");
+					case 0:
+						newString += OneAndZero(rndRep, zeroChar) + OneAndZero(rndRep, ":");
 						break;
 				}
+
+				#region Progress
+
 				if (everyCicle) {
 					ProgressIncrement(progressInc);
 				} else {
@@ -153,13 +157,16 @@ namespace ScramblerNS {
 						ProgressIncrement(1);
 					}
 				}
-				newString += OneAndZero(intRan.Next(1, 3), ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1));
+
+				#endregion
+				
+				newString += OneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1));
 			}
 
 			// When return, the first and the last character is random to confuse people. Before that two characters are our guys
-			return OneAndZero(intRan.Next(1, 3), ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1))
-				+ newString + OneAndZero(intRan.Next(3), chrOne) + OneAndZero(intRan.Next(3), chrZero)
-				+ OneAndZero(intRan.Next(1, 3), ScrChrs.Substring(intRan.Next(ScrChrs.Length), 1));
+			return OneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1))
+				+ newString + OneAndZero(random.Next(3), oneChar) + OneAndZero(random.Next(3), zeroChar)
+				+ OneAndZero(random.Next(1, 3), sourceChars.Substring(random.Next(sourceChars.Length), 1));
 		}
 
 		// This method called a few times to enter random amount of characters
@@ -171,16 +178,16 @@ namespace ScramblerNS {
 			return sOZ;
 		}
 
-		//private string GetCharacter(string strBinary){
+		//private string getCharacter(string strBinary){
 
-		//    return GetCharacter(strBinary).ToString();
+		//    return getCharacter(strBinary).ToString();
 		//}
 
-		private char GetCharacter(string strBinary) {
+		private char getCharacter(string strBinary) {
 			return (char)Convert.ToInt32(strBinary, 2);
 		}
 
-		private string GetBinary(char strChr) {
+		private string getBinary(char strChr) {
 			return Convert.ToString(strChr, 2).PadLeft(BINARY_LENGTH, '0');
 		}
 	}
