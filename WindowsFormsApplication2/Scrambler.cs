@@ -10,6 +10,7 @@ namespace ScramblerNS {
 		private const string RUSSIAN_CHARACTERS = "ёйцукенгшщзхъэждлорпавыфячсмитьбюЁЙЦУКЕНГШЩЗХЪЭЖДЛОРПАВЫФЯЧСМИТЬБЮ";
 		private const string ENGLISH_CHARACTERS = "abcdefghiklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ";
 		private const string OTHER_CHARACTERS = "><!@#$%&*1234567890";
+		private const string ALL_CHARACTERS = RUSSIAN_CHARACTERS + ENGLISH_CHARACTERS + OTHER_CHARACTERS;
 		private const int BINARY_LENGTH = 16;
 
 		public delegate void LogMessageEventHandler(string message);
@@ -37,7 +38,7 @@ namespace ScramblerNS {
 			int rndRep;
 			Random random = new Random();
 			string newString = "";
-			string sourceChars = OTHER_CHARACTERS;
+			string sourceChars = ALL_CHARACTERS;
 			string oneChar = sourceChars.Substring(random.Next(sourceChars.Length), 1);
 			sourceChars = sourceChars.Replace(oneChar, "");
 			string zeroChar = sourceChars.Substring(random.Next(sourceChars.Length), 1);
@@ -101,19 +102,45 @@ namespace ScramblerNS {
 
 		#region UnScrambler
 
-		public string MainString(string passingString) {
-			string bin = UnScrambstrBinaryext(passingString);
+		public string UnScramblerString(string passingString) {
+			string bin = unScrambleBinaryText(passingString);
 			LogMessage("Translated into binary format finalized");
 			string unScram = DecodeBinary(bin);
 			LogMessage("UnScrambler Binary finalized");
 			return unScram;
 		}
 
+		private string unScrambleBinaryText(string unScrambleString) {
+			string sourceChars = ALL_CHARACTERS;
+
+			// Cut last 9 characters of the text
+			// Last 9 characters contain the extra character with 1 & 0 characters
+			const int NINE_CHARS = 9;
+			string lastNineChars = reverseString(unScrambleString.Substring(unScrambleString.Length - NINE_CHARS));
+
+			// A unique way to find unique characters once ;)
+			string uniqueChars = new string(lastNineChars.Distinct().ToArray());
+
+			// We need array "1" and "2". "0" is extra
+			sourceChars = sourceChars.Replace(uniqueChars[1], '\0');
+			sourceChars = sourceChars.Replace(uniqueChars[2], '\0');
+			for (int i = 0; i < sourceChars.Length; i++) {
+				unScrambleString = unScrambleString.Replace(sourceChars.Substring(i, 1), "");
+			}
+
+			// I wrote a method to make things simpler.
+			unScrambleString = SingleString(uniqueChars[1].ToString(), unScrambleString);
+			unScrambleString = SingleString(uniqueChars[2].ToString(), unScrambleString);
+
+			unScrambleString = unScrambleString.Replace(";", "");
+			unScrambleString = unScrambleString.Replace(":", "");
+			unScrambleString = unScrambleString.Replace(uniqueChars[1], '0');
+			unScrambleString = unScrambleString.Replace(uniqueChars[2], '1');
+
+			return unScrambleString.Substring(0, (unScrambleString.Length - 2));
+		}
+
 		#endregion
-
-
-
-
 
 		private string DecodeBinary(string passingString) {
 			string charResult = "";
@@ -124,37 +151,6 @@ namespace ScramblerNS {
 			}
 			return charResult;
 		}
-
-		private string UnScrambstrBinaryext(string unScrambleString) {
-			string ScrChrs = OTHER_CHARACTERS;
-
-			// Cut last 9 characters of the text
-			// Last 9 characters contain the extra character with 1 & 0 characters
-			const int NINE_CHARS = 9;
-			string lastNineChars = reverseString(unScrambleString.Substring(unScrambleString.Length - NINE_CHARS));
-
-			// A unique way to find unique characters once ;)
-			string str = new string (lastNineChars.Distinct().ToArray());
-
-			// We need array "1" and "2". "0" is extra
-			ScrChrs = ScrChrs.Replace(str[1], '\0');
-			ScrChrs = ScrChrs.Replace(str[2], '\0');
-
-			for (int i = 0; i < ScrChrs.Length; i++) {
-				unScrambleString = unScrambleString.Replace(ScrChrs.Substring(i, 1), "");
-			}
-
-			// I wrote a method to make things simpler.
-			unScrambleString = SingleString(str[1].ToString(), unScrambleString);
-			unScrambleString = SingleString(str[2].ToString(), unScrambleString);
-
-			unScrambleString = unScrambleString.Replace(";", "");
-			unScrambleString = unScrambleString.Replace(":", "");
-			unScrambleString = unScrambleString.Replace(str[1], '0');
-			unScrambleString = unScrambleString.Replace(str[2], '1');
-
-			return unScrambleString.Substring(0, (unScrambleString.Length - 2));
-		} // Last two was our guys remember?
 
 		// Replace dublicate characters with single
 		private string SingleString(string MultiString, string StrFull) {

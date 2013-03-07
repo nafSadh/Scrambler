@@ -81,7 +81,7 @@
 			this.button1.TabIndex = 6;
 			this.button1.Text = "Scramble";
 			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.button1.Click += new System.EventHandler(this.scrambleButton_Click);
 			// 
 			// button3
 			// 
@@ -91,7 +91,7 @@
 			this.button3.TabIndex = 8;
 			this.button3.Text = "Scramble to Text";
 			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
+			this.button3.Click += new System.EventHandler(this.unScrambleButton_Click);
 			// 
 			// button4
 			// 
@@ -101,7 +101,7 @@
 			this.button4.TabIndex = 9;
 			this.button4.Text = "Exit";
 			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
+			this.button4.Click += new System.EventHandler(this.closeButton_Click);
 			// 
 			// button5
 			// 
@@ -111,7 +111,7 @@
 			this.button5.TabIndex = 10;
 			this.button5.Text = "Browse";
 			this.button5.UseVisualStyleBackColor = true;
-			this.button5.Click += new System.EventHandler(this.button5_Click);
+			this.button5.Click += new System.EventHandler(this.openFileButton_Click);
 			// 
 			// stopWatchLabel
 			// 

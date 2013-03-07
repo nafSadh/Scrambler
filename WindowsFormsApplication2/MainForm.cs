@@ -16,6 +16,9 @@ namespace ScramblerWindowsForm {
 
 		private delegate string ScramblerStringDelegate(string text);
 		private ScramblerStringDelegate std;
+		private delegate string UnScramblerStringDelegate(string text);
+		private UnScramblerStringDelegate ustd;
+
 		private const bool LOG = true;
 		private const bool NOLOG = false;
 
@@ -33,31 +36,38 @@ namespace ScramblerWindowsForm {
 			putMessageLabel(logFileTextBox, message + "\r\n", LOG);
 		}
 
-		private void button3_Click(object sender, EventArgs e) {
+		private void unScrambleButton_Click(object sender, EventArgs e) {
 			progressBar.Value = 0;
 			string sourceText = File.ReadAllText(@OUTPUT, Encoding.Default);
+			ustd = new UnScramblerStringDelegate(scr.UnScramblerString);
 			StopWatchOneTime.Start();
-			string text = scr.MainString(sourceText);
-			StopWatchOneTime.Stop();
-			stopWatchLabel.Text = StopWatchOneTime.Result.ToString();
-			MessageBox.Show(text);
-			File.WriteAllText(@"outputUnScrambled.txt", text);
+			ustd.BeginInvoke(sourceText, unScramblerCallBack, this);
 		}
 
-		private void button1_Click(object sender, EventArgs e) {
+		private void unScramblerCallBack(IAsyncResult ia) {
+			string resultText = ustd.EndInvoke(ia);
+			StopWatchOneTime.Stop();
+			putMessageLabel(stopWatchLabel, StopWatchOneTime.Result.ToString(), NOLOG);
+			MessageBox.Show(resultText);
+			File.WriteAllText(@"outputUnScrambled.txt", resultText);
+		}
+		
+		private void scrambleButton_Click(object sender, EventArgs e) {
 			progressBar.Value = 0;
 			string text = File.ReadAllText(sourceFileTextBox.Text, Encoding.Default);
 			std = new ScramblerStringDelegate(scr.ScrambledString);
 			StopWatchOneTime.Start();
 			std.BeginInvoke(text, scramblerCallBack, this);
 		}
-
+ 
 		private void scramblerCallBack(IAsyncResult ia) {
 			string resultText = std.EndInvoke(ia);
 			StopWatchOneTime.Stop();
 			putMessageLabel(stopWatchLabel, StopWatchOneTime.Result.ToString(), NOLOG);
 			File.WriteAllText(@OUTPUT, resultText);
 		}
+
+		#region MultiThreading Functions
 
 		private void putMessageLabel(Control control, string message, bool log) {
 			if (control.InvokeRequired) {
@@ -103,12 +113,14 @@ namespace ScramblerWindowsForm {
 		private void AddProgressCallBack(ProgressBar progress, int count) {
 			progress.Value = count;
 		}
+		
+		#endregion
 
-		private void button4_Click(object sender, EventArgs e) {
+		private void closeButton_Click(object sender, EventArgs e) {
 			this.Close();
 		}
 
-		private void button5_Click(object sender, EventArgs e) {
+		private void openFileButton_Click(object sender, EventArgs e) {
 			OpenFileDialog open = new OpenFileDialog();
 			open.ShowDialog();
 			sourceFileTextBox.Text = open.FileName;
